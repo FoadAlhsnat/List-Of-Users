@@ -17,7 +17,6 @@ async function fetchUrl(url) {
   }
 }
 
-
 // feach all the users
 async function fetchAll() {
   let studentlist = await fetchUrl(studenturl)

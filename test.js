@@ -34,6 +34,7 @@ async function fetchAll() {
 //creat the table
 function creattheDom(listOfStudent) {
   const tabl = document.querySelector('table');
+  tabl.closest('tr')
   let text = ''
   for (let i = 0; i < list.length; i++) {
     text += `<tr data-id="${listOfStudent[i].id}">

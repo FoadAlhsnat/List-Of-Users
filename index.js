@@ -37,7 +37,7 @@ async function fetchAll() {
     localStorage.setItem('users', JSON.stringify(list))
   }
   else  list = JSON.parse(localStorage.getItem('users'))
-  
+  input.focus()
   creattheDom(list)
 }
 //creat the table
@@ -133,21 +133,28 @@ function deletuser(e) {
 //filter the list
 function usersearch() {
   let inputText = input.value.toLocaleUpperCase()
-  let myoption = select.options[select.selectedIndex].value;
-  let list = document.querySelectorAll(`.${myoption} `)
+  let usersoption=select.value
+  let list = document.querySelectorAll(`.${usersoption} `)
   for (i = 0; i < list.length; i++) {
     let flter = list[i].innerText.toLocaleUpperCase()
     if (flter.indexOf(inputText) !== -1) {
-      list[i].parentElement.style.display = ""
+      list[i].parentElement.classList.remove('hidd')
     }
     else {
-      list[i].parentElement.style.display = "none"
+      list[i].parentElement.classList.add('hidd')
     }
   }
 
 }
 
+function selectinput(e) {
+  input.value="";
+  let tr=document.querySelectorAll('tr')
+  console.log(tr);
+  tr.forEach((item)=>item.classList.remove('hidd'))
+}
+
 
 fetchAll()
 input.addEventListener('keyup', usersearch)
-
+select.addEventListener('change',selectinput)

@@ -61,11 +61,11 @@ function creattheDom(listOfStudent) {
 function updateuser(e) {
 
   let row = e.target.parentElement.parentElement
-  let inputrow=row.querySelector('input');
+  let inputrow = row.querySelector('input');
   inputrow.classList.remove('hidd')
- let spanrow=row.querySelector('span');
- spanrow.classList.add('hidd')
-  console.log(inputrow,spanrow);
+  let spanrow = row.querySelector('span');
+  spanrow.classList.add('hidd')
+  console.log(inputrow, spanrow);
 
   /*let gettablefromrow = e.target.parentElement.parentElement.dataset.id
   console.log(gettablefromrow);

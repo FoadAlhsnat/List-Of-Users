@@ -36,9 +36,8 @@ async function fetchAll() {
     list = studentlist
     localStorage.setItem('users', JSON.stringify(list))
   }
-  else {
-    list = JSON.parse(localStorage.getItem('users'))
-  }
+  else  list = JSON.parse(localStorage.getItem('users'))
+  
   creattheDom(list)
 }
 //creat the table
@@ -55,7 +54,7 @@ function creattheDom(listOfStudent) {
     <td class="capsuls">${listOfStudent[i].capsule}</td>
     <td class="city">${listOfStudent[i].city}</td>
     <td class="hobby">${listOfStudent[i].hobby}</td>
-    <td><button class=update >update</button><button class="delete">Delete</button></td>
+    <td><button class="update" >update</button><button class="delete">Delete</button></td>
   </tr>`
   }
   tabl.insertAdjacentHTML('beforeend', text)
@@ -93,17 +92,17 @@ function updateuser(e) {
   //updatebutton
   confirm.addEventListener('click', () => {
     checkUpdate = false
-    mytbl.innerHTML = `<tr data-id="${list[gettablefromrow].id}">
-    <td>${list[gettablefromrow].id}</td>
-    <td class="firstName">${document.querySelector(".firstnameinput").value}</td>
-    <td class="lastName">${document.querySelector(".lastNameinput").value}</td>
-    <td class="age">${document.querySelector(".ageinput").value}</td>
-    <td class="gender">${document.querySelector(".genferinput").value}</td>
-    <td class="capsuls">${document.querySelector(".capsuleinput").value}</td>
-    <td class="city">${document.querySelector(".cityinput").value}</td>
-    <td class="hobby">${document.querySelector(".hobbyinput").value}</td>
-    <td><button class=update >update</button><button class="delete">Delete</button></td>
-  </tr>`
+  mytbl.innerHTML=`<tr data-id="${list[gettablefromrow].id}">
+  <td>${list[gettablefromrow].id}</td>
+  <td class="firstName">${document.querySelector(".firstnameinput").value}</td>
+  <td class="lastName">${document.querySelector(".lastNameinput").value}</td>
+  <td class="age">${document.querySelector(".ageinput").value}</td>
+  <td class="gender">${document.querySelector(".genferinput").value}</td>
+  <td class="capsuls">${document.querySelector(".capsuleinput").value}</td>
+  <td class="city">${document.querySelector(".cityinput").value}</td>
+  <td class="hobby">${document.querySelector(".hobbyinput").value}</td>
+  <td><button class="update" >update</button><button class="delete">Delete</button></td>
+</tr>`
   })
 
 
@@ -120,8 +119,9 @@ function updateuser(e) {
     <td class="capsuls">${list[gettablefromrow].capsule}</td>
     <td class="city">${list[gettablefromrow].city}</td>
     <td class="hobby">${list[gettablefromrow].hobby}</td>
-    <td><button class=update >update</button><button class="delete">Delete</button></td>
+    <td><button class="update" >update</button><button class="delete">Delete</button></td>
     </tr>`
+
   })
 
 }

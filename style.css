@@ -10,13 +10,17 @@ td,th{
 th{
   font-weight: bold;
 }
-tr:nth-child(even){
-  background-color: #333;
-}
+ tr:nth-child(even){
+  background-color: #fff;
+  color: #333;
+} 
 tr:nth-child(odd){
   background-color: #ddd;
 }
-
+tr:hover{
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ddd;
+}
 
 
 .loading{

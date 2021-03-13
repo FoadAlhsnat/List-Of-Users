@@ -3,10 +3,11 @@ const studenturl = "https://appleseed-wa.herokuapp.com/api/users/";
 //dom element
 const input = document.querySelector('input')
 let select = document.querySelector('select')
+let loadingDiv=document.querySelector('.loading')
 let deleteBtns;
 let update;
-let checkUpdate=false
-let list = []
+let checkUpdate = false
+let list
 async function fetchUrl(url) {
   try {
     const res = await fetch(url);
@@ -19,23 +20,29 @@ async function fetchUrl(url) {
 
 // feach all the users
 async function fetchAll() {
-  let studentlist = await fetchUrl(studenturl)
-  for (let i = 0; i < studentlist.length; i++) {
-    const data = await fetchUrl(studenturl + i);
-    //add the data to the arry of object 
-    studentlist[i].age = data.age
-    studentlist[i].city = data.city
-    studentlist[i].gender = data.gender
-    studentlist[i].hobby = data.hobby
-  }
 
-  list = studentlist
-  
+  if (localStorage.getItem('users') === null) {
+    let studentlist = await fetchUrl(studenturl)
+    for (let i = 0; i < studentlist.length; i++) {
+      const data = await fetchUrl(studenturl + i);
+      let x=Math.floor((i+1)/32*100*10)/10
+      loadingDiv.textContent=x+'%'
+      //add the data to the arry of object 
+      studentlist[i].age = data.age
+      studentlist[i].city = data.city
+      studentlist[i].gender = data.gender
+      studentlist[i].hobby = data.hobby
+    }
+    list = studentlist
+    localStorage.setItem('users', JSON.stringify(list))
+  }
+  else {
+    list = JSON.parse(localStorage.getItem('users'))
+  }
   creattheDom(list)
 }
 //creat the table
 function creattheDom(listOfStudent) {
-  localStorage.setItem('users',JSON.stringify(list))
   const tabl = document.querySelector('table');
   let text = ''
   for (let i = 0; i < list.length; i++) {
@@ -52,6 +59,7 @@ function creattheDom(listOfStudent) {
   </tr>`
   }
   tabl.insertAdjacentHTML('beforeend', text)
+  loadingDiv.remove()
   deleteBtns = document.querySelectorAll('.delete')
   update = document.querySelectorAll('.update')
 
@@ -61,8 +69,8 @@ function creattheDom(listOfStudent) {
 
 
 function updateuser(e) {
-  if(checkUpdate)return
-  checkUpdate=true
+  if (checkUpdate) return
+  checkUpdate = true
   //get the id of row was clicked
   let gettablefromrow = e.target.parentElement.parentElement.dataset.id
   console.log(gettablefromrow);
@@ -83,11 +91,11 @@ function updateuser(e) {
   let cancel = document.querySelector(".cancel")
 
   //updatebutton
-  confirm.addEventListener('click',  ()=> {
-    checkUpdate=false
+  confirm.addEventListener('click', () => {
+    checkUpdate = false
     mytbl.innerHTML = `<tr data-id="${list[gettablefromrow].id}">
     <td>${list[gettablefromrow].id}</td>
-    <td class="firstName">${ document.querySelector(".firstnameinput").value}</td>
+    <td class="firstName">${document.querySelector(".firstnameinput").value}</td>
     <td class="lastName">${document.querySelector(".lastNameinput").value}</td>
     <td class="age">${document.querySelector(".ageinput").value}</td>
     <td class="gender">${document.querySelector(".genferinput").value}</td>
@@ -101,8 +109,8 @@ function updateuser(e) {
 
 
   //cancel botton
-  cancel.addEventListener('click',()=>{
-    checkUpdate=false
+  cancel.addEventListener('click', () => {
+    checkUpdate = false
     mytbl.innerHTML = `<tr data-id="${list[gettablefromrow].id}">
     <td>${list[gettablefromrow].id}</td>
     <td class="firstName">${list[gettablefromrow].firstName}</td>
@@ -122,7 +130,7 @@ function deletuser(e) {
   let x = e.target
   x.parentElement.parentElement.remove()
 }
-
+//filter the list
 function usersearch() {
   let inputText = input.value.toLocaleUpperCase()
   let myoption = select.options[select.selectedIndex].value;
@@ -136,8 +144,10 @@ function usersearch() {
       list[i].parentElement.style.display = "none"
     }
   }
+
 }
 
 
 fetchAll()
 input.addEventListener('keyup', usersearch)
+
